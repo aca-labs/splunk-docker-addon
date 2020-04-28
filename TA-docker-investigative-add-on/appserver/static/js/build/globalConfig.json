@@ -1,0 +1,406 @@
+{
+    "pages": {
+        "inputs": {
+            "table": {
+                "header": [
+                    {
+                        "field": "name", 
+                        "label": "Name"
+                    }, 
+                    {
+                        "field": "interval", 
+                        "label": "Interval"
+                    }, 
+                    {
+                        "field": "index", 
+                        "label": "Index"
+                    }, 
+                    {
+                        "field": "disabled", 
+                        "label": "Status"
+                    }
+                ], 
+                "moreInfo": [
+                    {
+                        "field": "name", 
+                        "label": "Name"
+                    }, 
+                    {
+                        "field": "interval", 
+                        "label": "Interval"
+                    }, 
+                    {
+                        "field": "index", 
+                        "label": "Index"
+                    }, 
+                    {
+                        "field": "disabled", 
+                        "label": "Status"
+                    }, 
+                    {
+                        "field": "docker_api_version", 
+                        "label": "Docker API version"
+                    }, 
+                    {
+                        "field": "container_ids", 
+                        "label": "Container IDs"
+                    }, 
+                    {
+                        "field": "module_path", 
+                        "label": "Module path"
+                    }, 
+                    {
+                        "field": "command", 
+                        "label": "Command"
+                    }, 
+                    {
+                        "field": "override_sourcetype", 
+                        "label": "Override sourcetype"
+                    }
+                ], 
+                "actions": [
+                    "edit", 
+                    "enable", 
+                    "delete", 
+                    "clone"
+                ]
+            }, 
+            "title": "Inputs", 
+            "services": [
+                {
+                    "title": "Docker Processes", 
+                    "entity": [
+                        {
+                            "field": "name", 
+                            "label": "Name", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores.", 
+                                    "type": "regex", 
+                                    "pattern": "^[a-zA-Z]\\w*$"
+                                }, 
+                                {
+                                    "maxLength": 100, 
+                                    "errorMsg": "Length of input name should be between 1 and 100", 
+                                    "type": "string", 
+                                    "minLength": 1
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "Enter a unique name for the data input"
+                        }, 
+                        {
+                            "field": "interval", 
+                            "label": "Interval", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "errorMsg": "Interval must be an integer.", 
+                                    "type": "regex", 
+                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$"
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "Time interval of input in seconds."
+                        }, 
+                        {
+                            "field": "index", 
+                            "defaultValue": "default", 
+                            "label": "Index", 
+                            "type": "singleSelect", 
+                            "validators": [
+                                {
+                                    "maxLength": 80, 
+                                    "errorMsg": "Length of index name should be between 1 and 80.", 
+                                    "type": "string", 
+                                    "minLength": 1
+                                }
+                            ], 
+                            "required": true, 
+                            "options": {
+                                "createSearchChoice": true, 
+                                "blackList": "^_.*$", 
+                                "endpointUrl": "data/indexes"
+                            }
+                        }, 
+                        {
+                            "field": "docker_api_version", 
+                            "defaultValue": "auto", 
+                            "label": "Docker API version", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of text input is 8192", 
+                                    "type": "string", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "e.g. 1.39. Check with docker version. Leave as 'auto' to automatically detect.", 
+                            "options": {
+                                "placeholder": "auto"
+                            }
+                        }, 
+                        {
+                            "field": "container_ids", 
+                            "label": "Container IDs", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of text input is 8192", 
+                                    "type": "string", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "Enter list of long container IDs. Obtained from command line 'docker ps -a'. Format as space separated.", 
+                            "options": {
+                                "placeholder": "a b ... z"
+                            }
+                        }, 
+                        {
+                            "field": "module_path", 
+                            "defaultValue": "/opt/splunk/lib/python2.7/site-packages", 
+                            "label": "Module path", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of text input is 8192", 
+                                    "type": "string", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "Change only if modules are installed in different location to suggested.", 
+                            "options": {
+                                "placeholder": "/opt/splunk/lib/python2.7/site-packages"
+                            }
+                        }
+                    ], 
+                    "name": "docker_processes"
+                }, 
+                {
+                    "title": "Docker Container Overview", 
+                    "entity": [
+                        {
+                            "field": "name", 
+                            "label": "Name", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores.", 
+                                    "type": "regex", 
+                                    "pattern": "^[a-zA-Z]\\w*$"
+                                }, 
+                                {
+                                    "maxLength": 100, 
+                                    "errorMsg": "Length of input name should be between 1 and 100", 
+                                    "type": "string", 
+                                    "minLength": 1
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "Enter a unique name for the data input"
+                        }, 
+                        {
+                            "field": "interval", 
+                            "label": "Interval", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "errorMsg": "Interval must be an integer.", 
+                                    "type": "regex", 
+                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$"
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "Time interval of input in seconds."
+                        }, 
+                        {
+                            "field": "index", 
+                            "defaultValue": "default", 
+                            "label": "Index", 
+                            "type": "singleSelect", 
+                            "validators": [
+                                {
+                                    "maxLength": 80, 
+                                    "errorMsg": "Length of index name should be between 1 and 80.", 
+                                    "type": "string", 
+                                    "minLength": 1
+                                }
+                            ], 
+                            "required": true, 
+                            "options": {
+                                "createSearchChoice": true, 
+                                "blackList": "^_.*$", 
+                                "endpointUrl": "data/indexes"
+                            }
+                        }, 
+                        {
+                            "field": "docker_api_version", 
+                            "label": "Docker API version", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of text input is 8192", 
+                                    "type": "string", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "e.g. v1.39"
+                        }
+                    ], 
+                    "name": "docker_container_overview"
+                }, 
+                {
+                    "title": "Docker API Shell Script", 
+                    "entity": [
+                        {
+                            "field": "name", 
+                            "label": "Name", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores.", 
+                                    "type": "regex", 
+                                    "pattern": "^[a-zA-Z]\\w*$"
+                                }, 
+                                {
+                                    "maxLength": 100, 
+                                    "errorMsg": "Length of input name should be between 1 and 100", 
+                                    "type": "string", 
+                                    "minLength": 1
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "Enter a unique name for the data input"
+                        }, 
+                        {
+                            "field": "interval", 
+                            "label": "Interval", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "errorMsg": "Interval must be an integer.", 
+                                    "type": "regex", 
+                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$"
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "Time interval of input in seconds."
+                        }, 
+                        {
+                            "field": "index", 
+                            "defaultValue": "default", 
+                            "label": "Index", 
+                            "type": "singleSelect", 
+                            "validators": [
+                                {
+                                    "maxLength": 80, 
+                                    "errorMsg": "Length of index name should be between 1 and 80.", 
+                                    "type": "string", 
+                                    "minLength": 1
+                                }
+                            ], 
+                            "required": true, 
+                            "options": {
+                                "createSearchChoice": true, 
+                                "blackList": "^_.*$", 
+                                "endpointUrl": "data/indexes"
+                            }
+                        }, 
+                        {
+                            "field": "command", 
+                            "label": "Command", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of text input is 8192", 
+                                    "type": "string", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "e.g. docker stats --no-stream --format \"{\\\"name\\\":\\\"{{ .Name }}\\\",\\\"memory\\\":{\\\"raw\\\":\\\"{{ .MemUsage }}\\\",\\\"percent\\\":\\\"{{ .MemPerc }}\\\"},\\\"cpu\\\":\\\"{{ .CPUPerc }}\\\"}\" "
+                        }, 
+                        {
+                            "field": "override_sourcetype", 
+                            "defaultValue": "Docker_API", 
+                            "label": "Override sourcetype", 
+                            "type": "text", 
+                            "validators": [
+                                {
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of text input is 8192", 
+                                    "type": "string", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "required": true, 
+                            "help": "Recommend overriding sourcetype to something more specific to your call."
+                        }
+                    ], 
+                    "name": "docker_api_shell_script"
+                }
+            ], 
+            "description": "Manage your data inputs"
+        }, 
+        "configuration": {
+            "title": "Configuration", 
+            "tabs": [
+                {
+                    "title": "Logging", 
+                    "entity": [
+                        {
+                            "defaultValue": "INFO", 
+                            "field": "loglevel", 
+                            "options": {
+                                "autoCompleteFields": [
+                                    {
+                                        "label": "DEBUG", 
+                                        "value": "DEBUG"
+                                    }, 
+                                    {
+                                        "label": "INFO", 
+                                        "value": "INFO"
+                                    }, 
+                                    {
+                                        "label": "WARNING", 
+                                        "value": "WARNING"
+                                    }, 
+                                    {
+                                        "label": "ERROR", 
+                                        "value": "ERROR"
+                                    }, 
+                                    {
+                                        "label": "CRITICAL", 
+                                        "value": "CRITICAL"
+                                    }
+                                ], 
+                                "disableSearch": true
+                            }, 
+                            "label": "Log level", 
+                            "type": "singleSelect"
+                        }
+                    ], 
+                    "name": "logging"
+                }
+            ], 
+            "description": "Set up your add-on"
+        }
+    }, 
+    "meta": {
+        "version": "1.0.0", 
+        "displayName": "Docker Investigative Add-On", 
+        "name": "TA-docker-investigative-add-on", 
+        "apiVersion": "3.0.0", 
+        "restRoot": "TA_docker_investigative_add_on"
+    }
+}
